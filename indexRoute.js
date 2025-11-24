@@ -2,6 +2,10 @@ import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { prisma } from "./db/prismaClient.js";
 
+import path from "node:path";
+
+const assetsPath = path.join(__dirname, "public");
+
 const mountMiddleware = (app) => {
     app.use(
         session({
@@ -16,6 +20,11 @@ const mountMiddleware = (app) => {
             cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
         })
     );
+
+    app.set("views", path.join(__dirname, "views"));
+    app.set("view engine", "ejs");
+    app.use(express.urlencoded({ extended: false }));
+    app.use(express.static(assetsPath));
 };
 
 export { mountMiddleware };
