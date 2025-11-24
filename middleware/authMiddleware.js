@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
 
-import prisma from "../db/prismaClient";
+import { prisma } from "../db/prismaClient";
 
 const localStrat = new LocalStrategy(
     {
@@ -52,4 +52,4 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
-export default passport;
+export { passport };

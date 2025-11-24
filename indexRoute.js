@@ -1,8 +1,8 @@
 import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import prisma from "../db/prismaClient";
+import { prisma } from "./db/prismaClient.js";
 
-const mountRoutes = (app) => {
+const mountMiddleware = (app) => {
     app.use(
         session({
             secret: process.env.SESSION_SECRET,
@@ -17,3 +17,5 @@ const mountRoutes = (app) => {
         })
     );
 };
+
+export { mountMiddleware };
