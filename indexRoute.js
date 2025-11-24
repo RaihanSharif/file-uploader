@@ -4,7 +4,7 @@ import { prisma } from "./db/prismaClient.js";
 
 import path from "node:path";
 
-const assetsPath = path.join(__dirname, "public");
+const assetsPath = path.join(import.meta.dirname, "public");
 
 const mountMiddleware = (app) => {
     app.use(
