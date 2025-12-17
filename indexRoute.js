@@ -1,11 +1,12 @@
+import express from "express";
 import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
-import { prisma } from "./db/prismaClient.js";
-import express from "express";
 
 import path from "node:path";
 import { passport } from "./middleware/authMiddleware.js";
 import { userRouter } from "./routes/userRoutes.js";
+
+import * as prisma from "./prisma/prismaClientInstance.js";
 
 const assetsPath = path.join(import.meta.dirname, "public");
 
@@ -15,6 +16,7 @@ const mountMiddleware = (app) => {
             secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: false,
+            // TODO: fix session store, as there is no session store in the db
             store: new PrismaSessionStore(prisma, {
                 checkedPeriod: 60 * 60 * 1000, // two minute session
                 dbRecordIdIsSessionId: true,

@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
 
-import { prisma } from "../db/prismaClient.js";
+import { prisma } from "../prisma/prismaClientInstance.js";
 
 const localStrat = new LocalStrategy(
     {

@@ -1,0 +1,262 @@
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+    margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    /* 4. Add accessible line-height */
+    line-height: 1.5;
+    /* 5. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+    text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+    isolation: isolate;
+}
+/* end of css reset */
+
+body {
+    background-color: rgb(202, 217, 230);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    margin: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+button,
+a,
+span {
+    border-radius: 5px;
+}
+
+header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(auto, 2fr);
+    padding: 1rem 3rem;
+    background-color: aliceblue;
+    border: 1px solid black;
+    box-shadow: 2px 2px darkgray;
+}
+
+header button {
+    padding: 0.35rem 1rem;
+    border: 1px solid black;
+}
+
+.member-logged-in {
+    padding: 0.5rem 1rem;
+    background-color: green;
+    border: 1px solid black;
+    color: white;
+}
+
+#login {
+    place-self: end;
+    display: flex;
+    gap: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul {
+    display: flex;
+    gap: 1rem;
+}
+nav ul li {
+    list-style: none;
+}
+
+#login-form {
+    display: inline-block;
+}
+
+/* the two below selector have code smell:
+two different set of selectors with a lot of 
+attributes and values in common
+ */
+
+#create-topic-btn {
+    padding: 0.5rem 1rem;
+    background-color: green;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    border: 1px solid black;
+    font-size: larger;
+    font-weight: bold;
+}
+
+#create-topic-btn:hover {
+    background-color: rgb(1, 108, 1);
+}
+.topic-list-header-member,
+.topic-card-member {
+    display: grid;
+    grid-template-columns: 5fr 1fr 2fr 1fr;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1rem;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.topic-card:hover,
+.topic-card-member:hover {
+    background-color: rgba(240, 248, 255, 0.482);
+    box-shadow: 2px 2px rgba(0, 0, 0, 0.406);
+}
+
+.topic-list-header,
+.topic-card {
+    display: grid;
+    grid-template-columns: 5fr 2fr 1fr;
+    border: 1px solid black;
+    padding: 1rem;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 5px;
+}
+
+.topic-list-header,
+.topic-list-header-member {
+    background-color: lightgray;
+    border: 2px solid black;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.topic-item {
+    text-decoration: none;
+    color: inherit;
+}
+.topic-item:hover {
+    background-color: aliceblue;
+}
+
+.topic-title {
+    text-align: start;
+}
+
+/* single topic page */
+.topic-container,
+.reply-container {
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.reply-container {
+    margin-left: 2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.reply-container > div {
+    border-top: 1px solid darkgray;
+    display: flex;
+    gap: 1rem;
+}
+.reply-container > div > span {
+    font-size: smaller;
+    font-style: italic;
+}
+
+.topic-container > * {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid darkgrey;
+    margin: 1rem 0;
+}
+
+textarea {
+    width: 100%;
+}
+
+.heading {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hide {
+    display: none;
+}
+
+.unhide {
+    display: flex;
+    gap: 1rem;
+}

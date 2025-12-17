@@ -1,8 +1,7 @@
-import { PrismaClient } from "../generated/prisma/client.js";
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+import * as prisma from "../prismaClientInstance.js";
 
 async function getUserByEmail(email) {
     const user = await prisma.user.findUnique({
