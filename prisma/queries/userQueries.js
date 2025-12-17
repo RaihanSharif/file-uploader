@@ -46,4 +46,4 @@ async function addUser(username, email, password) {
     }
 }
 
-export { getEmail, getUsername, getUser, addUser };
+export { getUserByEmail, getUserByUsername, getUserById, addUser };
