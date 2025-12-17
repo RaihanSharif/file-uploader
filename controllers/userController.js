@@ -1,7 +1,6 @@
-import bcrypt from "bcryptjs";
 import { passport } from "../middleware/authMiddleware.js";
 import { validationResult, matchedData } from "express-validator";
-// import { prisma } from "../db/prismaClient";
+import * as db from "../prisma/queries/userQueries.js";
 
 import { validateUser } from "../middleware/userValidators.js";
 
@@ -14,5 +13,19 @@ function getSignupForm(req, res) {
         });
     }
 }
+
+const postSignupForm = [
+    validateUser,
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { email, username, password } = matchedData(req);
+        await db.addUser(email, username, password);
+        res.redirect("/");
+    },
+];
 
 export { getSignupForm };
