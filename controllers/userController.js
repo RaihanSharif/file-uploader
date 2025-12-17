@@ -28,7 +28,7 @@ const postSignupForm = [
     },
 ];
 
-function postLogoutUser(req, res, next) {
+function logoutUser(req, res, next) {
     req.logout((err) => {
         if (err) {
             return next(err);
@@ -37,7 +37,7 @@ function postLogoutUser(req, res, next) {
     });
 }
 
-const authenticateUser = [
+const loginUser = [
     validateUser,
     passport.authenticate("local", {
         successRedirect: "/",
@@ -45,4 +45,4 @@ const authenticateUser = [
     }),
 ];
 
-export { getSignupForm, postSignupForm, postLogoutUser, authenticateUser };
+export { getSignupForm, postSignupForm, logoutUser, loginUser };

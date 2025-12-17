@@ -5,7 +5,7 @@ import express from "express";
 
 import path from "node:path";
 import { passport } from "./middleware/authMiddleware.js";
-import { authRouter } from "./routes/authRoutes.js";
+import { userRouter } from "./routes/userRoutes.js";
 
 const assetsPath = path.join(import.meta.dirname, "public");
 
@@ -16,7 +16,7 @@ const mountMiddleware = (app) => {
             resave: false,
             saveUninitialized: false,
             store: new PrismaSessionStore(prisma, {
-                checkedPeriod: 2 * 60 * 1000,
+                checkedPeriod: 60 * 60 * 1000, // two minute session
                 dbRecordIdIsSessionId: true,
                 dbRecordIdFunction: undefined,
             }),
@@ -40,7 +40,7 @@ const mountMiddleware = (app) => {
     app.get("/", (req, res) =>
         res.render("index", { title: "welcome to file uploader" })
     );
-    app.use(authRouter);
+    app.use(userRouter);
 };
 
 export { mountMiddleware };
