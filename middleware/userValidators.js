@@ -7,7 +7,7 @@ const validateUser = [
         .isLength({ min: 3, max: 20 })
         .withMessage("username must be between 3 and 20 characters")
         .custom(async (val) => {
-            const user = await db.getUsername(val);
+            const user = await db.getUserByUsername(val);
             if (user) {
                 throw new Error("username already exists");
             } else {
@@ -19,7 +19,7 @@ const validateUser = [
         .withMessage(`A correctly formatted email address required`)
         .normalizeEmail()
         .custom(async (val) => {
-            const email = await db.getEmail(val);
+            const email = await db.getUserByEmail(val);
             if (email) {
                 throw new Error("email already exists");
             } else {
