@@ -1,46 +1,43 @@
 import { body } from "express-validator";
+import * as db from "../prisma/queries/userQueries.js";
 
 const validateUser = [
     body("username")
         .trim()
-        .optional({ nullable: true, checkFalsy: true })
-        .isAlphanumeric()
-        .withMessage(`Username must only contain letters and numbers`)
-        .isLength({ min: 1, max: 255 }),
+        .isLength({ min: 3, max: 20 })
+        .withMessage("username must be between 3 and 20 characters")
+        .custom(async (val) => {
+            const user = await db.getUsername(val);
+            if (user) {
+                throw new Error("username already exists");
+            } else {
+                return true;
+            }
+        }),
     body("email")
-        .trim()
-        .notEmpty()
-        .withMessage("Email is required")
         .isEmail()
-        .withMessage(`Please use correct email formatting`)
-        // .custom(async (value) => {
-        //     const { rows } = await query(
-        //         "SELECT * FROM account WHERE email = $1",
-        //         [value]
-        //     );
-        //     if (rows.length >= 1) {
-        //         throw new Error("E-mail already in use");
-        //     }
-        // })
-        .normalizeEmail(),
+        .withMessage(`A correctly formatted email address required`)
+        .normalizeEmail()
+        .custom(async (val) => {
+            const email = await db.getEmail(val);
+            if (email) {
+                throw new Error("email already exists");
+            } else {
+                return true;
+            }
+        }),
     body("password")
-        .trim()
         .isStrongPassword()
         .withMessage(
             "password must be at least 8 characters long, contain 1 lowercase letter, one uppercase letter, and 1 symbol"
         ),
     body("confirm-password")
-        .trim()
         .isStrongPassword()
         .withMessage(
             "password must be at least 8 characters long, contain 1 lowercase letter, one uppercase letter, and 1 symbol"
         )
-        .custom((value, { req, loc, path }) => {
-            if (value !== req.body.password) {
-                throw new Error("passwords do not match");
-            } else {
-                return value;
-            }
+        .custom((val, { req }) => {
+            return val === req.body.password;
         }),
 ];
 

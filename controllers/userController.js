@@ -28,4 +28,21 @@ const postSignupForm = [
     },
 ];
 
-export { getSignupForm };
+function postLogoutUser(req, res, next) {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect("/");
+    });
+}
+
+const authenticateUser = [
+    validateUser,
+    passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/",
+    }),
+];
+
+export { getSignupForm, postSignupForm, postLogoutUser, authenticateUser };
