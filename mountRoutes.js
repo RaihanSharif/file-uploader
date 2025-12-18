@@ -17,15 +17,19 @@ const mountMiddleware = (app) => {
             secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: false,
-            // TODO: fix session store, as there is no session store in the db
             store: new PrismaSessionStore(new PrismaClient(), {
-                checkedPeriod: 60 * 60 * 1000, // two minute session
+                checkedPeriod: 2 * 60 * 1000, // two minute session
                 dbRecordIdIsSessionId: true,
                 dbRecordIdFunction: undefined,
             }),
+            cookie: {
+                secure: process.env.SECURE_COOKIE === "true",
+                sameSite: process.env.SAME_SITE,
+                httpOnly: true,
+                maxAge: 60 * 60 * 1000,
+            },
         })
     );
-
     app.use(passport.session());
     app.set("views", path.join(import.meta.dirname, "views"));
     app.set("view engine", "ejs");
@@ -33,6 +37,7 @@ const mountMiddleware = (app) => {
     app.use(express.static(assetsPath));
 
     app.use((req, res, next) => {
+        console.log(req.user);
         if (req.user) {
             res.locals.currentUser = req.user;
         }
