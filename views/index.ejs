@@ -9,14 +9,9 @@
             <div class="heading">
 
                 <% if (locals.currentUser) { %>
-                <h1>
-                    Welcome to the File Uploader <%= currentUser.username %>, a simple google drive clone.
-                </h1>
+                <%- include('partials/loggedinHomepage.ejs') %>
                 <% } else { %>
-
-                    <h1>
-                        Welcome to the File Uploader, a simple google drive clone.
-                    </h1>
+                    <%- include('partials/loggeedOutHomepage.ejs') %>
                <% } %>
         </main>
     </body>
