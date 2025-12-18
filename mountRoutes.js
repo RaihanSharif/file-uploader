@@ -7,6 +7,7 @@ import { passport } from "./middleware/authMiddleware.js";
 import { userRouter } from "./routes/userRoutes.js";
 
 import * as prisma from "./prisma/prismaClientInstance.js";
+import { indexRouter } from "./routes/indexRoute.js";
 
 const assetsPath = path.join(import.meta.dirname, "public");
 
@@ -39,10 +40,8 @@ const mountMiddleware = (app) => {
         next();
     });
 
-    app.get("/", (req, res) =>
-        res.render("index", { title: "welcome to file uploader" })
-    );
     app.use(userRouter);
+    app.use(indexRouter);
 };
 
 export { mountMiddleware };

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
 
-import * as prisma from "../prismaClientInstance.js";
+import { prisma } from "../prismaClientInstance.js";
 
 async function getUserByEmail(email) {
     const user = await prisma.user.findUnique({
@@ -18,6 +18,8 @@ async function getUserByUsername(username) {
             username: username,
         },
     });
+    console.log(`getUserByUsername: `);
+    console.log(user);
     return user;
 }
 

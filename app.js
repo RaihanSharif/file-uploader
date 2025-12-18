@@ -1,6 +1,6 @@
 import express from "express";
 
-import { mountMiddleware } from "./indexRoute.js";
+import { mountMiddleware } from "./mountRoutes.js";
 
 const app = express();
 
