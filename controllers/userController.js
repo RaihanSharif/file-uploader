@@ -22,8 +22,10 @@ const postSignupForm = [
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { email, username, password } = matchedData(req);
-        await db.addUser(email, username, password);
+        const data = matchedData(req);
+        console.log(data);
+        await db.addUser(data);
+        // await db.addUser(email, username, password);
         res.redirect("/");
     },
 ];
@@ -37,12 +39,9 @@ function logoutUser(req, res, next) {
     });
 }
 
-const loginUser = [
-    validateUser,
-    passport.authenticate("local", {
-        successRedirect: "/",
-        failureRedirect: "/",
-    }),
-];
+const loginUser = passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/sign-up",
+});
 
 export { getSignupForm, postSignupForm, logoutUser, loginUser };

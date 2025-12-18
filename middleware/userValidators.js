@@ -19,8 +19,8 @@ const validateUser = [
         .withMessage(`A correctly formatted email address required`)
         .normalizeEmail()
         .custom(async (val) => {
-            const email = await db.getUserByEmail(val);
-            if (email) {
+            const user = await db.getUserByEmail(val);
+            if (user) {
                 throw new Error("email already exists");
             } else {
                 return true;

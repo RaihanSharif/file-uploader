@@ -6,7 +6,7 @@ import path from "node:path";
 import { passport } from "./middleware/authMiddleware.js";
 import { userRouter } from "./routes/userRoutes.js";
 
-import * as prisma from "./prisma/prismaClientInstance.js";
+import { PrismaClient } from "./generated/prisma/client.js";
 import { indexRouter } from "./routes/indexRoute.js";
 
 const assetsPath = path.join(import.meta.dirname, "public");
@@ -18,12 +18,11 @@ const mountMiddleware = (app) => {
             resave: false,
             saveUninitialized: false,
             // TODO: fix session store, as there is no session store in the db
-            store: new PrismaSessionStore(prisma, {
+            store: new PrismaSessionStore(new PrismaClient(), {
                 checkedPeriod: 60 * 60 * 1000, // two minute session
                 dbRecordIdIsSessionId: true,
                 dbRecordIdFunction: undefined,
             }),
-            cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
         })
     );
 
