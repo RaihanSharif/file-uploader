@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
                 uniqueSuffix +
                 path.extname(file.originalname)
         );
+        console.log(`file xtension: ${file.originalname}`);
     },
 });
 
@@ -30,6 +31,9 @@ fileRouter.get("/create-file", (req, res) => {
 });
 
 fileRouter.post("/create-file", upload.single("content"), (req, res, next) => {
+    if (!req.file) {
+        res.send("no file uploaded!");
+    }
     console.log(req.file, req.body);
     res.send("File uploaded!");
 });
