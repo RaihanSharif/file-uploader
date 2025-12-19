@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import * as db from "../prisma/queries/userQueries.js";
+import * as db from "../../prisma/queries/userQueries.js";
 
 const validateUser = [
     body("username")

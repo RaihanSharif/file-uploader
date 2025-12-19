@@ -2,7 +2,7 @@ import { passport } from "../middleware/authMiddleware.js";
 import { validationResult, matchedData } from "express-validator";
 import * as db from "../prisma/queries/userQueries.js";
 
-import { validateUser } from "../middleware/userValidators.js";
+import { validateUser } from "../middleware/validators/userValidators.js";
 
 function getSignupForm(req, res) {
     if (req.user) {
