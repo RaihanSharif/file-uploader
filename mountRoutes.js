@@ -9,6 +9,7 @@ import { userRouter } from "./routes/userRoutes.js";
 import { PrismaClient } from "./generated/prisma/client.js";
 import { indexRouter } from "./routes/indexRoute.js";
 import { fileRouter } from "./routes/fileRoutes.js";
+import { folderRouter } from "./routes/folderRoutes.js";
 
 const assetsPath = path.join(import.meta.dirname, "public");
 
@@ -47,6 +48,7 @@ const mountMiddleware = (app) => {
     app.use(userRouter);
     app.use(indexRouter);
     app.use(fileRouter);
+    app.use(folderRouter);
 };
 
 export { mountMiddleware };
