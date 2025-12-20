@@ -27,12 +27,13 @@ model Session {
 
 model Folder {
   id        Int      @id @default(autoincrement())
+  name      String
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int
   files File[]
   
-  parentId Int  
+  parentId Int?  
   parentFolder Folder? @relation("parent", fields: [parentId], references: [id], onDelete: Cascade)
   children Folder[] @relation("parent")
 }
@@ -44,6 +45,6 @@ model File {
   userId Int
   name String
   path String // the string path to where the file is stored
-  containingFolder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId Int
+  containingFolder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 }
