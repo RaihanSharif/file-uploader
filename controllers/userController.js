@@ -1,6 +1,7 @@
 import { passport } from "../middleware/authMiddleware.js";
 import { validationResult, matchedData } from "express-validator";
 import * as db from "../prisma/queries/userQueries.js";
+import { createFolder } from "../prisma/queries/folderQueries.js";
 
 import { validateUser } from "../middleware/validators/userValidators.js";
 
@@ -24,8 +25,10 @@ const postSignupForm = [
 
         const data = matchedData(req);
         console.log(data);
-        await db.addUser(data);
-        // await db.addUser(email, username, password);
+        const user = await db.addUser(data);
+        console.log({ data });
+        console.log(user);
+        createFolder(user.id, user.username, null);
         res.redirect("/");
     },
 ];
