@@ -36,6 +36,9 @@ model Folder {
   parentId Int?  
   parentFolder Folder? @relation("parent", fields: [parentId], references: [id], onDelete: Cascade)
   children Folder[] @relation("parent")
+
+  // prevent multiple root folders and two sibling folders having the same name
+  @@unique([userId, parentId, name]) 
 }
 
 model File {
@@ -47,4 +50,7 @@ model File {
   path String // the string path to where the file is stored
   folderId Int
   containingFolder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  // prevent two files in one directory having the same name.
+  @@unique([userId, folderId, name])
 }
