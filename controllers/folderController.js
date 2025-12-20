@@ -9,17 +9,13 @@ function getFolderForm(req, res) {
     }
 }
 
-function postNewFolder(req, res, next) {
+async function postNewFolder(req, res, next) {
     try {
-        const insert = db.createFolder(
-            req.user.id,
-            req.body.name,
-            +req.body.parentId
-        );
+        await db.createFolder(req.user.id, req.body.name, +req.body.parentId);
         res.redirect("/");
     } catch (err) {
-        console.log(err);
-        res.status(409).send(err);
+        console.log("there was an error: ", err.code);
+        res.redirect("/sign-up");
     }
 }
 
