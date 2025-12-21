@@ -1,5 +1,4 @@
 import { prisma } from "../prismaClientInstance.js";
-import { Prisma } from "../../generated/prisma/client.js";
 /**
  * create root folder when user first signs up
  */
