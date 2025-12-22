@@ -47,9 +47,10 @@ model File {
   user User @relation(fields: [userId], references:[id])
   userId Int
   name String
-  path String // the string path to where the file is stored
+  path String // the string path to where the file is stored in supabase
   folderId Int
   containingFolder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
 
   // prevent two files in one directory having the same name.
   @@unique([userId, folderId, name])
