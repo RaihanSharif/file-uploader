@@ -7,5 +7,6 @@ fileRouter.get("/add-file", (req, res) => {
 });
 
 fileRouter.post("/add-file/:folderid", fileController.postFileUpload);
+fileRouter.post("/delete-file/:fileid", fileController.postDeleteFile);
 
 export { fileRouter };

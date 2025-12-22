@@ -6,6 +6,25 @@ const supabase = createClient(
     process.env.SUPABASE_API
 );
 
+async function getFileById(fileId) {}
+
+async function getFileListById(folderId, userId) {
+    // get all the files given a parent folder and a user id
+    // TODO: get download links later
+    const allFiles = prisma.file.findMany({
+        where: {
+            userId: userId,
+            folderId: folderId,
+        },
+    });
+
+    console.log("file list given folder");
+    console.log(allFiles);
+    return allFiles;
+}
+
+async function getFileByName(fileName) {}
+
 async function insertFile(file, filePath, fileDetails, folderId, userId) {
     // TODO: some code to upload the actual file to supabase
     const { data, error } = await supabase.storage
@@ -32,8 +51,28 @@ async function insertFile(file, filePath, fileDetails, folderId, userId) {
     });
 }
 
-async function deleteFile() {}
+async function deleteFile(userId, fileId) {
+    const file = await prisma.file.findUnique({
+        where: {
+            id: Number(fileId),
+            userId: userId,
+        },
+    });
 
-async function updateFile() {}
+    const { data, error } = await supabase.storage
+        .from("TOPFileUploader")
+        .remove([file.path]);
 
-export { insertFile, deleteFile, updateFile };
+    const deletedFile = await prisma.file.delete({
+        where: {
+            id: Number(fileId),
+            userId: userId,
+        },
+    });
+
+    return deletedFile;
+}
+
+async function updateFilename() {}
+
+export { insertFile, deleteFile, updateFilename, getFileListById };

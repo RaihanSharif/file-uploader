@@ -7,4 +7,19 @@ then in the template, check if item is a folder, if it is, then
 render a 'folder partial, to which the folder is passed'
 otherwise render a file partial, suppliying the file to render
  -->
-<main class="items-container"></main>
+<main class="items-container">
+    <% if (locals.folder) {%>
+    <h1>Current Folder: <%= folder.name %></h1>
+    <ul>
+        <% folder.files.forEach((file) => { %>
+        <li><%= file.name %></li>
+        <% }) %>
+    </ul>
+
+    <ul>
+        <% folder.children.forEach((child) => { %>
+        <li><%= child.name %></li>
+        <% }) %>
+    </ul>
+    <%} %>
+</main>

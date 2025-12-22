@@ -1,4 +1,5 @@
-import * as db from "../prisma/queries/folderQueries.js";
+import * as folderDB from "../prisma/queries/folderQueries.js";
+import * as fileDB from "../prisma/queries/fileQueries.js";
 import { Prisma } from "../generated/prisma/client.js";
 
 function getFolderForm(req, res) {
@@ -11,7 +12,11 @@ function getFolderForm(req, res) {
 
 async function postNewFolder(req, res, next) {
     try {
-        await db.createFolder(req.user.id, req.body.name, +req.body.parentId);
+        await folderDB.createFolder(
+            req.user.id,
+            req.body.name,
+            +req.body.parentId
+        );
         res.redirect("/");
     } catch (err) {
         console.log("there was an error: ", err.code);
@@ -19,4 +24,18 @@ async function postNewFolder(req, res, next) {
     }
 }
 
-export { getFolderForm, postNewFolder };
+async function viewFolder(req, res, next) {
+    const { folderid } = req.params;
+    const { id } = req.user;
+
+    const folder = await folderDB.getFolder(folderid, id);
+
+    res.render("index", {
+        folder: folder,
+        title: "index",
+    });
+}
+
+async function viewUserRootFolder(req, res, next) {}
+
+export { getFolderForm, postNewFolder, viewFolder };

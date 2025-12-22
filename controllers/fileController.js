@@ -28,4 +28,15 @@ const postFileUpload = [
         res.redirect(`folder/${folderid}`); // TOOD: fix routing later
     },
 ];
-export { getFileUploadForm, postFileUpload };
+
+async function postDeleteFile(req, res, next) {
+    const { fileid } = req.params;
+    const { id } = req.user;
+
+    //TODO: some logic to ensure only authenticated user who owns the file can delete
+
+    const deleteFile = await fileDB.deleteFile(id, fileid);
+
+    res.redirect(`/folder/${deleteFile.folderId}`);
+}
+export { getFileUploadForm, postFileUpload, postDeleteFile };
