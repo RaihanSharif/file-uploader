@@ -1,14 +1,13 @@
 <div class="item">
-    <div class="logo">
+    <div class="item-logo">
         <img src="/icons/document-icon.svg" alt="file icon" />
         <p><%= file.name %></p>
     </div>
-    <div class="buttons">
-        <!-- <a href="<%= file.downloadLink %>"
+    <div class="item-buttons">
+        <a href="<%= file.downloadLink %>"
             ><input type="image" src="../icons/download-icon.svg"
-        /></a> -->
-
-        <dialog>
+        /></a>
+        <dialog class="edit-file-modal">
             <button class="exit-dialog">X</button>
             <p>Rename</p>
             <form action="/updateFile/<%= file.id %>" method="post">
@@ -16,14 +15,19 @@
                 <button type="submit">Rename</button>
             </form>
         </dialog>
-        <div><input type="image" src="/icons/edit-icon.svg" /></div>
+        <div>
+            <input
+                class="show-file-edit-modal"
+                type="image"
+                src="/icons/edit-icon.svg" />
+        </div>
         <form
             action="/deleteFile/<%= currentUser.id %>/<%= file.id %>"
             method="post">
             <input type="image" src="/icons/delete-icon.svg" />
         </form>
         <form action="/viewFileDetails/<%= file.id %>" method="post">
-            <input type="image" src="/icons/edit-icon.svg" />
+            <input type="image" src="/icons/info-icon.svg" />
         </form>
     </div>
 </div>

@@ -29,3 +29,22 @@ if (showMemberFormBtn) {
         showMemberFormBtn.classList.toggle("hide");
     });
 }
+
+const showFileEditModals = document.querySelectorAll(".show-file-edit-modal");
+
+showFileEditModals.forEach((button) => {
+    button.addEventListener("click", () => {
+        // Find the modal within the same .item container
+        const modal = button.closest(".item").querySelector(".edit-file-modal");
+        modal.showModal();
+    });
+});
+
+const exitDialogButtons = document.querySelectorAll(".exit-dialog");
+
+exitDialogButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const modal = button.closest(".edit-file-modal");
+        modal.close();
+    });
+});

@@ -251,3 +251,37 @@ textarea {
     align-items: center;
     justify-content: space-between;
 } */
+
+.item {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-logo {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.item-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.edit-file-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0; /* Remove default margin */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-file-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
