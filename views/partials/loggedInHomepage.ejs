@@ -1,24 +1,16 @@
 <h1>Welcome to File Uploader <%= locals.currentUser.username %></h1>
 
-<!-- 
-Should display files and folders in a list format
-files and folders should be passed to the template as an 'item' list
-then in the template, check if item is a folder, if it is, then 
-render a 'folder partial, to which the folder is passed'
-otherwise render a file partial, suppliying the file to render
- -->
 <main class="items-container">
+    <!-- a simple back button or breadcrumbs -->
     <% if (locals.folder) {%>
     <h1>Current Folder: <%= folder.name %></h1>
-    <ul>
-        <% folder.files.forEach((file) => { %>
-        <li><%= file.name %></li>
-        <% }) %>
-    </ul>
+
+    <% folder.files.forEach((file) => { %> <%- include('file.ejs', {file: file})
+    %> <% }) %>
 
     <ul>
         <% folder.children.forEach((child) => { %>
-        <li><%= child.name %></li>
+        <li>📁<%= child.name %></li>
         <% }) %>
     </ul>
     <%} %>
