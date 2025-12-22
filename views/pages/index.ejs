@@ -6,13 +6,9 @@
     <body>
         <%- include('../partials/header') %>
         <main>
-            <div class="heading">
-
-                <% if (locals.currentUser) { %>
-                <%- include('../partials/loggedinHomepage.ejs') %>
-                <% } else { %>
-                    <%- include('../partials/loggedOutHomepage.ejs') %>
-               <% } %>
+            <% if (locals.currentUser) { %> <%-
+            include('../partials/loggedinHomepage.ejs') %> <% } else { %> <%-
+            include('../partials/loggedOutHomepage.ejs') %> <% } %>
         </main>
     </body>
 </html>

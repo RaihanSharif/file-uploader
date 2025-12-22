@@ -25,6 +25,19 @@ async function postNewFolder(req, res, next) {
 }
 
 async function viewFolder(req, res, next) {
+    // the two if blocks let users know they are attempting to access
+    // another user's folder.
+    // TODO: if a user manually enters a route for a folder that does not exist e.g. /7/48
+    // it should show an alert to let them know that the file doesn't exist.
+    if (!req.isAuthenticated()) {
+        return res.send("log in to view folders");
+    }
+    if (Number(req.user.id) !== Number(req.params.userid)) {
+        console.log(
+            `req.user.id: ${req.user.id}, req.params.userid: ${req.params.userid}`
+        );
+        return res.send(`currently logged in user ${req.user.id}`);
+    }
     const { folderid } = req.params;
     const { id } = req.user;
 
