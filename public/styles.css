@@ -97,8 +97,8 @@ span {
 }
 
 header {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(auto, 2fr);
+    display: flex;
+    justify-content: space-between;
     padding: 1rem 3rem;
     background-color: aliceblue;
     border: 1px solid black;
@@ -244,13 +244,6 @@ attributes and values in common
 textarea {
     width: 100%;
 }
-
-/* .heading {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: space-between;
-} */
 
 .item {
     display: flex;

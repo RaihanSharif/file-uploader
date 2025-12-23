@@ -1,6 +1,6 @@
 <h1>Welcome to File Uploader <%= locals.currentUser.username %></h1>
 
-<main class="items-container">
+<section class="items-container">
     <!-- a simple back button or breadcrumbs -->
     <% if (locals.folder) {%>
     <h1>Current Folder: <%= folder.name %></h1>
@@ -8,4 +8,4 @@
     <% folder.files.forEach((file) => { %> <%- include('file.ejs', {file: file})
     %> <% }) %> <% folder.children.forEach((child) => { %> <%-
     include('folder.ejs', {folder: child}) %> <% }) %> <%} %>
-</main>
+</section>
