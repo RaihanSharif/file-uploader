@@ -11,22 +11,19 @@ async function getFileById(fileId) {}
 async function getFileListById(folderId, userId) {
     // get all the files given a parent folder and a user id
     // TODO: get download links later
-    const allFiles = prisma.file.findMany({
+    const allFiles = await prisma.file.findMany({
         where: {
             userId: userId,
             folderId: folderId,
         },
     });
 
-    console.log("file list given folder");
-    console.log(allFiles);
     return allFiles;
 }
 
 async function getFileByName(fileName) {}
 
 async function insertFile(file, filePath, fileDetails, folderId, userId) {
-    // TODO: some code to upload the actual file to supabase
     const { data, error } = await supabase.storage
         .from("TOPFileUploader")
         .upload(filePath, file, {
@@ -40,7 +37,6 @@ async function insertFile(file, filePath, fileDetails, folderId, userId) {
     } else {
         console.log("uploaded data:", data);
     }
-    console.log(fileDetails.originalname);
     return await prisma.file.create({
         data: {
             path: filePath,
@@ -52,6 +48,7 @@ async function insertFile(file, filePath, fileDetails, folderId, userId) {
 }
 
 async function deleteFile(userId, fileId) {
+    // only deletes file owned by the supplied owner
     const file = await prisma.file.findUnique({
         where: {
             id: Number(fileId),

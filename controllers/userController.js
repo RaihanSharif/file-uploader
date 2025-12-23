@@ -24,10 +24,8 @@ const postSignupForm = [
         }
 
         const data = matchedData(req);
-        console.log(data);
         const user = await db.addUser(data);
-        console.log({ data });
-        console.log(user);
+
         createFolder(user.id, user.username, null);
         res.redirect("/");
     },

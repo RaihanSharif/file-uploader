@@ -17,8 +17,6 @@ async function getUserByUsername(username) {
             username: username,
         },
     });
-    console.log(`getUserByUsername: `);
-    console.log(user);
     return user;
 }
 

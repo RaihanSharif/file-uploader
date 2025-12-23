@@ -50,8 +50,6 @@ async function getFolder(folderId, userId) {
         },
     });
 
-    console.log("get folder query");
-    console.log(folder);
     return folder;
 }
 
