@@ -18,9 +18,7 @@
         <div>
             <input class="show-modal" type="image" src="/icons/edit-icon.svg" />
         </div>
-        <form
-            action="/deleteFile/<%= currentUser.id %>/<%= file.id %>"
-            method="post">
+        <form action="/delete-file/<%= file.id %>" method="post">
             <input type="image" src="/icons/delete-icon.svg" />
         </form>
         <form action="/viewFileDetails/<%= file.id %>" method="post">

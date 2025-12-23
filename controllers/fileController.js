@@ -25,15 +25,13 @@ const postFileUpload = [
 
         await fileDB.insertFile(file.buffer, path, file, folderid, id);
 
-        res.redirect(`folder/${folderid}`); // TOOD: fix routing later
+        res.redirect(`/${id}/${folderid}`); // TOOD: fix routing later
     },
 ];
 
 async function postDeleteFile(req, res, next) {
     const { fileid } = req.params;
     const { id } = req.user;
-
-    //TODO: some logic to ensure only authenticated user who owns the file can delete
 
     const deleteFile = await fileDB.deleteFile(id, fileid);
 
