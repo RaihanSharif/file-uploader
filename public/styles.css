@@ -278,3 +278,8 @@ textarea {
 .edit-item-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.item > a {
+    text-decoration: none;
+    color: inherit;
+}
