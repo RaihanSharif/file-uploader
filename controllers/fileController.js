@@ -7,8 +7,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 function getFileUploadForm(req, res) {
-    // TODO: later the folder_id should be collected from the req params
-    res.render("showFileFormTemp", { title: "upload a file", folder_id: 0 });
+    res.render("showFileFormTemp", {
+        title: "upload a file",
+        folderid: req.params.folderid,
+    });
 }
 
 const postFileUpload = [
@@ -33,8 +35,8 @@ async function postDeleteFile(req, res, next) {
     const { fileid } = req.params;
     const { id } = req.user;
 
-    const deleteFile = await fileDB.deleteFile(id, fileid);
+    const deletedFile = await fileDB.deleteFile(id, fileid);
 
-    res.redirect(`/folder/${deleteFile.folderId}`);
+    res.redirect(`/${id}/${deletedFile.folderId}`);
 }
 export { getFileUploadForm, postFileUpload, postDeleteFile };

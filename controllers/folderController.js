@@ -33,12 +33,7 @@ async function viewFolder(req, res, next) {
     if (!req.isAuthenticated()) {
         return res.send("log in to view folders");
     }
-    if (Number(req.user.id) !== Number(req.params.userid)) {
-        console.log(
-            `req.user.id: ${req.user.id}, req.params.userid: ${req.params.userid}`
-        );
-        return res.send(`currently logged in user ${req.user.id}`);
-    }
+
     const { folderid } = req.params;
     const { id } = req.user;
 
