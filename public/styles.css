@@ -270,7 +270,7 @@ textarea {
     align-items: center;
 }
 
-.edit-file-modal {
+.edit-item-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -282,6 +282,6 @@ textarea {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.edit-file-modal::backdrop {
+.edit-item-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
 }

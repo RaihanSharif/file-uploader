@@ -7,7 +7,7 @@
         <a href="<%= file.downloadLink %>"
             ><input type="image" src="../icons/download-icon.svg"
         /></a>
-        <dialog class="edit-file-modal">
+        <dialog class="edit-item-modal">
             <button class="exit-dialog">X</button>
             <p>Rename</p>
             <form action="/updateFile/<%= file.id %>" method="post">
@@ -16,10 +16,7 @@
             </form>
         </dialog>
         <div>
-            <input
-                class="show-file-edit-modal"
-                type="image"
-                src="/icons/edit-icon.svg" />
+            <input class="show-modal" type="image" src="/icons/edit-icon.svg" />
         </div>
         <form
             action="/deleteFile/<%= currentUser.id %>/<%= file.id %>"

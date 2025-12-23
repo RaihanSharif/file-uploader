@@ -20,22 +20,35 @@ if (signupForm) {
     confirm.addEventListener("change", validatePassword);
 }
 
-const showMemberFormBtn = document.getElementById("show-member-form-btn");
+// const showFileEditModals = document.querySelectorAll(".show-file-edit-modal");
 
-if (showMemberFormBtn) {
-    const form = document.getElementById("membership-form");
-    showMemberFormBtn.addEventListener("click", () => {
-        form.classList.toggle("hide");
-        showMemberFormBtn.classList.toggle("hide");
-    });
-}
+// showFileEditModals.forEach((button) => {
+//     button.addEventListener("click", () => {
+//         // Find the modal within the same .item container
+//         const modal = button.closest(".item").querySelector(".edit-file-modal");
+//         modal.showModal();
+//     });
+// });
 
-const showFileEditModals = document.querySelectorAll(".show-file-edit-modal");
+// exitDialogButtons.forEach((button) => {
+//     button.addEventListener("click", () => {
+//         const modal = button.closest(".edit-file-modal");
+//         modal.close();
+//     });
+// });
 
-showFileEditModals.forEach((button) => {
+// file and folder in the displayed list of item
+
+const showItemEditModalButtons = document.querySelectorAll(".show-modal");
+console.log(showItemEditModalButtons);
+
+showItemEditModalButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        // Find the modal within the same .item container
-        const modal = button.closest(".item").querySelector(".edit-file-modal");
+        const modal = button
+            .closest(".item-buttons")
+            .querySelector(".edit-item-modal");
+        // modal is null, why?
+        console.log(modal);
         modal.showModal();
     });
 });
@@ -44,7 +57,7 @@ const exitDialogButtons = document.querySelectorAll(".exit-dialog");
 
 exitDialogButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        const modal = button.closest(".edit-file-modal");
+        const modal = button.closest(".edit-item-modal");
         modal.close();
     });
 });

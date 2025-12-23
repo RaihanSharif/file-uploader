@@ -6,12 +6,6 @@
     <h1>Current Folder: <%= folder.name %></h1>
 
     <% folder.files.forEach((file) => { %> <%- include('file.ejs', {file: file})
-    %> <% }) %>
-
-    <ul>
-        <% folder.children.forEach((child) => { %>
-        <li>📁<%= child.name %></li>
-        <% }) %>
-    </ul>
-    <%} %>
+    %> <% }) %> <% folder.children.forEach((child) => { %> <%-
+    include('folder.ejs', {folder: child}) %> <% }) %> <%} %>
 </main>
