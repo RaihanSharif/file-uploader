@@ -39,6 +39,10 @@ async function viewFolder(req, res, next) {
 
     const folder = await folderDB.getFolder(folderid, id);
 
+    if (!folder) {
+        return res.send(`you're trying to access someone else's folder`);
+    }
+
     res.render("index", {
         folder: folder,
         title: "index",
