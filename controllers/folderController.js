@@ -1,6 +1,5 @@
 import * as folderDB from "../prisma/queries/folderQueries.js";
 import * as fileDB from "../prisma/queries/fileQueries.js";
-import { Prisma } from "../generated/prisma/client.js";
 
 function getFolderForm(req, res) {
     if (req.user) {

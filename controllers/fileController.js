@@ -1,6 +1,7 @@
 import multer from "multer";
 import * as fileDB from "../prisma/queries/fileQueries.js";
 import * as folderDB from "../prisma/queries/folderQueries.js";
+import { Prisma } from "../generated/prisma/index.js";
 
 // memory storage doesn't have any configs
 // file metadata is lost after req->res process is completed
@@ -33,8 +34,17 @@ const postFileUpload = [
         // TODO: validattion error check
 
         const path = `${username}/${folderid}/${file.originalname}`;
-
-        await fileDB.insertFile(file.buffer, path, file, folderid, id);
+        try {
+            await fileDB.insertFile(file.buffer, path, file, folderid, id);
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError)
+                if (err.code === "P2002") {
+                    return res.send(
+                        `${file.originalname} already exists in this folder`
+                    );
+                }
+            return next(err);
+        }
 
         res.redirect(`/${id}/${folderid}`); // TOOD: fix routing later
     },
