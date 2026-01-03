@@ -1,9 +1,5 @@
-<form action="/add-folder" method="post">
+<form action="/add-folder/<%=parentid%>" method="post">
     <label for="folder-name">folder name:</label>
     <input type="text" name="name" id="folder-name" />
-
-    <!-- parent folder is temporary, will be calculated autmatically -->
-    <label for="parent-id">folder id (temporary)</label>
-    <input type="number" name="parentId" id="parent-id" />
     <button type="submit">add folder</button>
 </form>

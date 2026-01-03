@@ -3,20 +3,24 @@ import * as fileDB from "../prisma/queries/fileQueries.js";
 
 function getFolderForm(req, res) {
     if (req.user) {
-        res.render("tempFolderCreate.ejs", { title: "create a new folder" });
+        res.render("tempFolderCreate.ejs", {
+            title: "create a new folder",
+            parentid: req.params.parentid,
+        });
     } else {
         res.status(403).send("must be logged in");
     }
 }
 
 async function postNewFolder(req, res, next) {
+    console.log(req.params);
     try {
-        await folderDB.createFolder(
+        const folder = await folderDB.createFolder(
             req.user.id,
             req.body.name,
-            +req.body.parentId
+            +req.params["parentid"]
         );
-        res.redirect("/");
+        res.redirect(`/${req.user.id}/${folder.id}`);
     } catch (err) {
         console.log("there was an error: ", err.code);
         res.redirect("/sign-up");
