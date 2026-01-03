@@ -1,10 +1,24 @@
 <section class="items-container">
     <!-- a simple back button or breadcrumbs -->
     <% if (locals.folder) {%>
-    <h1>
-        Welcome <%= locals.currentUser.username %>. Current Folder: <%=
-        folder.name %>
-    </h1>
+    <div class="breadcrumbs">
+        <% if (locals.breadcrumbs) { %> <% if (breadcrumbs.length === 1) { %>
+        <a href="/"><%= currentUser.username%></a>
+        <% } else { %>
+        <a href="/"><%= currentUser.username%></a>
+
+        <% for (let i = 1; i < breadcrumbs.length -1 ; i++) { %>
+        <span> > </span>
+        <a href="/<%=currentUser.id%>/<%=breadcrumbs[i].id%>"
+            ><%=breadcrumbs[i].name%></a
+        >
+        <%}%>
+        <span> > </span>
+        <a href="/<%=currentUser.username%>/<%=folder.id%>"
+            ><%= folder.name %></a
+        >
+        <%} %> <% } %>
+    </div>
 
     <div class="add-item-links">
         <a class="add-item-btn" href="/add-file/<%=folder.id%>">add file </a>

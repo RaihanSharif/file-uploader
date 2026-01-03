@@ -23,12 +23,22 @@ async function postNewFolder(req, res, next) {
     }
 }
 
-async function viewFolder(req, res, next) {
-    // TODO: if a user manually enters a route for a folder that does not exist e.g. /7/48
-    // it should show an alert to let them know that the file doesn't exist.
+async function buildBreadcrumbs(folder, userId) {
+    const breadcrumbs = [];
 
-    // the two if blocks let users know they are attempting to access
-    // another user's folder.
+    let current = folder;
+    while (current) {
+        breadcrumbs.unshift(current);
+        if (!current.parentId) {
+            break;
+        }
+        current = await folderDB.getFolder(current.parentId, userId);
+    }
+
+    return breadcrumbs;
+}
+
+async function viewFolder(req, res, next) {
     if (!req.isAuthenticated()) {
         return res.send("log in to view folders");
     }
@@ -42,9 +52,12 @@ async function viewFolder(req, res, next) {
         return res.send(`you're trying to access someone else's folder`);
     }
 
+    const breadcrumbs = await buildBreadcrumbs(folder, id);
+
     res.render("index", {
         folder: folder,
         title: "index",
+        breadcrumbs: breadcrumbs,
     });
 }
 

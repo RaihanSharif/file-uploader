@@ -9,13 +9,9 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 async function getFileUploadForm(req, res) {
-    const folder = await fileDB.getFileListById(
-        +req.params.folderid,
-        req.user.id
-    );
-    console.log(folder);
-    if (folder.length === 0) {
-        return res.send("you're trying to upload to someone else's folder!");
+    const folder = folderDB.getFolder(+req.params.folderid, req.user.id);
+    if (!folder) {
+        res.send("could not find folder to upload file");
     }
     res.render("showFileFormTemp", {
         title: "upload a file",
