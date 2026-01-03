@@ -46,7 +46,7 @@ const postFileUpload = [
             return next(err);
         }
 
-        res.redirect(`/${id}/${folderid}`); // TOOD: fix routing later
+        res.redirect(`/${id}/${folderid}`); // TODO: fix routing later
     },
 ];
 

@@ -6,8 +6,9 @@
         folder.name %>
     </h1>
 
-    <div>
-        <a href="/add-file/<%=folder.id%>">add file </a>
+    <div class="add-item-links">
+        <a class="add-item-btn" href="/add-file/<%=folder.id%>">add file </a>
+        <a class="add-item-btn" href="/add-folder/<%=folder.id%>">add folder</a>
     </div>
     <% folder.files.forEach((file) => { %> <%- include('file.ejs', {file: file})
     %> <% }) %> <% folder.children.forEach((child) => { %> <%-

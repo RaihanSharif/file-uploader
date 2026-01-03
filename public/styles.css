@@ -283,3 +283,17 @@ textarea {
     text-decoration: none;
     color: inherit;
 }
+
+.add-item-btn {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    background-color: cadetblue;
+    border: 1px solid black;
+}
+
+.add-item-links {
+    display: flex;
+    gap: 1rem;
+}
