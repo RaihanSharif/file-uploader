@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <%- include('../partials/header') %>
+    <body>
+        <h1><%= title %></h1>
+        <% if (locals.currentUser) { %> <%- include('../forms/fileForm') %> <% }
+        else { %>
+        <h2>You must be logged in to upload a file</h2>
+        <% } %>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+<header>
+    <div><a href="/">LOGO</a></div>
+    <!-- the logout button is form as the route controller is a post request -->
+    <!-- for security reasons -->
+    <div id="login">
+        <% if (locals.currentUser) { %>
+        <form action="/log-out" method="post">
+            <% if (currentUser) { %>
+            <span><%= currentUser.username %></span>
+            <%} %>
+            <button type="submit">Log out</button>
+        </form>
+        <%} else { %> <%- include('../forms/loginForm.ejs') %>
+        <a href="/sign-up">Sign Up</a>
+        <%}%>
+    </div>
+</header>
