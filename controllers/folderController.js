@@ -15,35 +15,40 @@ function getFolderForm(req, res) {
     }
 }
 
-async function addNewFolder(req, res, next) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    const { name, parentid } = matchedData(req);
-
-    const parentFolder = await folderDB.getFolder(parentid, req.user.id);
-
-    if (!parentFolder) {
-        return res.send(
-            "you are trying to upload to a folder that does not exist"
-        );
-    }
-
-    try {
-        const folder = await folderDB.createFolder(req.user.id, name, parentid);
-        res.redirect(`/${req.user.id}/${folder.id}`);
-    } catch (err) {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-            if (err.code === "P2002") {
-                return res.send(`${name} already exists in this folder`);
-            }
+const postNewFolder = [
+    validateFolder,
+    async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
         }
-        return next(err);
-    }
-}
+        const { name, parentid } = matchedData(req);
 
-const postNewFolder = [validateFolder, addNewFolder];
+        const parentFolder = await folderDB.getFolder(parentid, req.user.id);
+
+        if (!parentFolder) {
+            return res.send(
+                "you are trying to upload to a folder that does not exist"
+            );
+        }
+
+        try {
+            const folder = await folderDB.createFolder(
+                req.user.id,
+                name,
+                parentid
+            );
+            res.redirect(`/${req.user.id}/${folder.id}`);
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
+                if (err.code === "P2002") {
+                    return res.send(`${name} already exists in this folder`);
+                }
+            }
+            return next(err);
+        }
+    },
+];
 
 async function buildBreadcrumbs(folder, userId) {
     const breadcrumbs = [];
