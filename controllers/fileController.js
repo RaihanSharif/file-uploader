@@ -2,11 +2,21 @@ import multer from "multer";
 import * as fileDB from "../prisma/queries/fileQueries.js";
 import * as folderDB from "../prisma/queries/folderQueries.js";
 import { Prisma } from "../generated/prisma/index.js";
+import {
+    handleFileValidationErrors,
+    validateFile,
+} from "../middleware/validators/fileValidator.js";
 
 // memory storage doesn't have any configs
 // file metadata is lost after req->res process is completed
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 50 * 1024 * 1024, // 50MB limit
+        files: 1,
+    },
+});
 
 async function getFileUploadForm(req, res) {
     const folder = folderDB.getFolder(+req.params.folderid, req.user.id);
@@ -20,14 +30,30 @@ async function getFileUploadForm(req, res) {
 }
 
 const postFileUpload = [
-    // file upload validator
-    upload.single("content"),
+    (req, res, next) => {
+        upload.single("content")(req, res, (err) => {
+            if (err instanceof multer.MulterError) {
+                if (err.code === "LIMIT_FILE_SIZE") {
+                    return res
+                        .status(400)
+                        .send("File too large (max size: 50MB)");
+                }
+
+                if (err.code === "LIMIT_FILE_COUNT") {
+                    return res
+                        .status(400)
+                        .send("can only upload 1 file at a time");
+                }
+            }
+            next();
+        });
+    },
+    validateFile,
+    handleFileValidationErrors,
     async (req, res, next) => {
         const { folderid } = req.params;
         const { username, id } = req.user;
         const file = req.file;
-
-        // TODO: validattion error check
 
         const path = `${username}/${folderid}/${file.originalname}`;
         try {
@@ -43,7 +69,7 @@ const postFileUpload = [
             return next(err);
         }
 
-        res.redirect(`/${id}/${folderid}`); // TODO: fix routing later
+        res.redirect(`/${id}/${folderid}`);
     },
 ];
 
