@@ -88,6 +88,24 @@ async function viewFolder(req, res, next) {
     });
 }
 
-async function viewUserRootFolder(req, res, next) {}
+async function postDeleteFolder(req, res, next) {
+    const folderid = Number(req.params["folderid"]);
+    const userid = req.user.id;
 
-export { getFolderForm, postNewFolder, viewFolder };
+    const folder = await folderDB.getFolder(folderid, userid);
+    if (!folder) {
+        return res.send("could not find folder to delete");
+    }
+
+    if (!folder.parentId) {
+        return res.status(400).send("cannot delete root folder");
+    }
+
+    const deletedFolder = await folderDB.deleteFolder(folderid, userid);
+    if (deletedFolder) {
+        console.log(deletedFolder);
+        return res.redirect(`/${userid}/${deletedFolder.parentId}`);
+    }
+}
+
+export { getFolderForm, postNewFolder, viewFolder, postDeleteFolder };

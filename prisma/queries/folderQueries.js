@@ -13,8 +13,14 @@ async function createFolder(userId, name, parentId) {
 }
 
 async function deleteFolder(folderId, userId) {
-    // delete only if folder has a parentId
-    // and the right user Id is supplied
+    const folder = await prisma.folder.delete({
+        where: {
+            id: folderId,
+            userId: userId,
+        },
+    });
+
+    return folder;
 }
 
 async function getRootFolder(userId) {
@@ -57,4 +63,4 @@ async function getFolderList(folderId, userId) {}
 
 async function updateFolderName(folderId) {}
 
-export { createFolder, getFolder, getRootFolder };
+export { createFolder, getFolder, getRootFolder, deleteFolder };
