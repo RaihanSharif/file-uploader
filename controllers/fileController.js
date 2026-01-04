@@ -33,12 +33,13 @@ const postFileUpload = [
         try {
             await fileDB.insertFile(file.buffer, path, file, folderid, id);
         } catch (err) {
-            if (err instanceof Prisma.PrismaClientKnownRequestError)
+            if (err instanceof Prisma.PrismaClientKnownRequestError) {
                 if (err.code === "P2002") {
                     return res.send(
                         `${file.originalname} already exists in this folder`
                     );
                 }
+            }
             return next(err);
         }
 
