@@ -15,7 +15,8 @@
     "type": "module",
     "main": "app.js",
     "scripts": {
-        "dev": "nodemon --env-file-if-exists=.env app.js"
+        "dev": "nodemon --env-file-if-exists=.env app.js",
+        "start": "node --env-file=.env app.js"
     },
     "dependencies": {
         "@prisma/client": "^6.19.0",
