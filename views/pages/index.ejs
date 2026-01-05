@@ -7,8 +7,8 @@
         <%- include('../partials/header') %>
         <main>
             <% if (locals.currentUser) { %> <%-
-            include('../partials/loggedinHomepage.ejs') %> <% } else { %> <%-
-            include('../partials/loggedOutHomepage.ejs') %> <% } %>
+            include('../partials/loggedinHomepage') %> <% } else { %> <%-
+            include('../partials/loggedOutHomepage') %> <% } %>
         </main>
     </body>
 </html>
