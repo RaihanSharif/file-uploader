@@ -86,4 +86,17 @@ async function postDeleteFile(req, res, next) {
 
     res.redirect(`/${id}/${deletedFile.folderId}`);
 }
-export { getFileUploadForm, postFileUpload, postDeleteFile };
+
+async function postRenameFile(req, res, next) {
+    const { fileid } = req.params;
+    const { name } = req.body;
+    console.log(req.user.id);
+    console.log(+fileid);
+    const renamedFile = await fileDB.updateFilename(+fileid, req.user.id, name);
+    if (renamedFile) {
+        res.redirect(`/${req.user.id}/${renamedFile.folderId}`);
+    } else {
+        res.send("could not rename file");
+    }
+}
+export { getFileUploadForm, postFileUpload, postDeleteFile, postRenameFile };

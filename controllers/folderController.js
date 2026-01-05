@@ -67,7 +67,8 @@ async function buildBreadcrumbs(folder, userId) {
 
 async function viewFolder(req, res, next) {
     if (!req.isAuthenticated()) {
-        return res.send("log in to view folders");
+        console.log("log in to view folders");
+        return res.redirect("/");
     }
 
     const { folderid } = req.params;

@@ -70,6 +70,17 @@ async function deleteFile(userId, fileId) {
     return deletedFile;
 }
 
-async function updateFilename() {}
+async function updateFilename(fileId, userId, newName) {
+    const updatedFile = await prisma.file.update({
+        where: {
+            id: fileId,
+            userId: userId,
+        },
+        data: {
+            name: newName,
+        },
+    });
+    return updatedFile;
+}
 
 export { insertFile, deleteFile, updateFilename, getFileListById };

@@ -73,8 +73,4 @@ async function getFolder(folderId, userId) {
     return folder;
 }
 
-async function getFolderList(folderId, userId) {}
-
-async function updateFolderName(folderId) {}
-
 export { createFolder, getFolder, getRootFolder, deleteFolder, renameFolder };
