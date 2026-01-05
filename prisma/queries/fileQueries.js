@@ -71,6 +71,26 @@ async function deleteFile(userId, fileId) {
 }
 
 async function updateFilename(fileId, userId, newName) {
+    // supabase update
+
+    const fileToUpdate = await prisma.file.findUnique({
+        where: {
+            id: fileId,
+            userId: userId,
+        },
+    });
+    let newPath = fileToUpdate.path.split("/");
+    newPath.pop();
+    newPath.push(newName);
+    newPath = newPath.join("/");
+
+    const { data, error } = await supabase.storage
+        .from("TOPFileUploader")
+        .move(fileToUpdate.path, newPath);
+    if (error) {
+        console.log("could not rename file in supabase", error);
+    }
+
     const updatedFile = await prisma.file.update({
         where: {
             id: fileId,
@@ -78,6 +98,7 @@ async function updateFilename(fileId, userId, newName) {
         },
         data: {
             name: newName,
+            path: newPath,
         },
     });
     return updatedFile;
