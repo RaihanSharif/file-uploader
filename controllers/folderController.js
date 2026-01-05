@@ -110,10 +110,28 @@ async function postDeleteFolder(req, res, next) {
     }
 }
 
-async function postRenameFolder(req, res, next) {
-    // get a file id, and user id from the request
-    // if the user id matches the req.user.id rename
-}
+const postRenameFolder = [
+    validateFolder,
+    async (req, res, next) => {
+        // get a file id, and user id from the request
+        // if the user id matches the req.user.id rename
+        if (!req.isAuthenticated()) {
+            res.send("must be logged in to update folder");
+        }
+        const { folderid } = req.params;
+        console.log("renaming folder");
+        const changedFolder = await folderDB.renameFolder(
+            +folderid,
+            req.user.id,
+            req.body.name
+        );
+        if (changedFolder) {
+            return res.redirect(`/${req.user.id}/${folderid}`);
+        } else {
+            return res.send("could not rename folder");
+        }
+    },
+];
 
 export {
     getFolderForm,

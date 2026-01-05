@@ -17,6 +17,9 @@ async function deleteFolder(folderId, userId) {
         where: {
             id: folderId,
             userId: userId,
+            parentId: {
+                not: null,
+            },
         },
     });
 
@@ -36,7 +39,18 @@ async function getRootFolder(userId) {
     });
 }
 
-async function renameFolder(folderId, userId) {}
+async function renameFolder(folderId, userId, newName) {
+    const updateUser = await prisma.folder.update({
+        where: {
+            id: folderId,
+            userId: userId,
+        },
+        data: {
+            name: newName,
+        },
+    });
+    return updateUser;
+}
 
 /**
  *
@@ -63,4 +77,4 @@ async function getFolderList(folderId, userId) {}
 
 async function updateFolderName(folderId) {}
 
-export { createFolder, getFolder, getRootFolder, deleteFolder };
+export { createFolder, getFolder, getRootFolder, deleteFolder, renameFolder };

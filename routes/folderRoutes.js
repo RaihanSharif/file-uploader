@@ -12,4 +12,9 @@ folderRouter.post(
     "/delete-folder/:folderid",
     folderController.postDeleteFolder
 );
+folderRouter.post(
+    "/update-folder/:folderid",
+    folderController.postRenameFolder
+);
+
 export { folderRouter };
