@@ -5,7 +5,7 @@ async function renderHome(req, res) {
         const folder = await fileDB.getRootFolder(req.user.id);
         return res.redirect(`/${req.user.id}/${folder.id}`);
     }
-    res.render("index", { title: "welcome to file uploader" });
+    res.render("pages/index", { title: "welcome to file uploader" });
 }
 
 export { renderHome };

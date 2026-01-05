@@ -6,7 +6,7 @@ import { Prisma } from "../generated/prisma/index.js";
 
 function getFolderForm(req, res) {
     if (req.user) {
-        res.render("tempFolderCreate.ejs", {
+        res.render("pages/tempFolderCreate.ejs", {
             title: "create a new folder",
             parentid: req.params.parentid,
         });
@@ -82,7 +82,7 @@ async function viewFolder(req, res, next) {
 
     const breadcrumbs = await buildBreadcrumbs(folder, id);
 
-    res.render("index", {
+    res.render("pages/index", {
         folder: folder,
         title: "index",
         breadcrumbs: breadcrumbs,

@@ -9,7 +9,7 @@ function getSignupForm(req, res) {
     if (req.user) {
         res.send("you are already logged in");
     } else {
-        res.render("sign-up", {
+        res.render("pages/sign-up", {
             title: "sign up to be a member",
         });
     }

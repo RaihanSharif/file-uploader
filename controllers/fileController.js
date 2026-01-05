@@ -23,7 +23,7 @@ async function getFileUploadForm(req, res) {
     if (!folder) {
         res.send("could not find folder to upload file");
     }
-    res.render("showFileFormTemp", {
+    res.render("pages/showFileFormTemp", {
         title: "upload a file",
         folderid: req.params.folderid,
     });
