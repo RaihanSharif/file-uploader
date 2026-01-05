@@ -40,9 +40,11 @@ function logoutUser(req, res, next) {
     });
 }
 
-const loginUser = passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/sign-up",
-});
+const loginUser = [
+    passport.authenticate("local"),
+    (req, res) => {
+        res.redirect("/");
+    },
+];
 
 export { getSignupForm, postSignupForm, logoutUser, loginUser };
