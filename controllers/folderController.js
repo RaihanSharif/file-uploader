@@ -92,20 +92,33 @@ async function postDeleteFolder(req, res, next) {
     const folderid = Number(req.params["folderid"]);
     const userid = req.user.id;
 
-    const folder = await folderDB.getFolder(folderid, userid);
-    if (!folder) {
-        return res.send("could not find folder to delete");
-    }
+    // const folder = await folderDB.getFolder(folderid, userid);
+    // if (!folder) {
+    //     return res.send("could not find folder to delete");
+    // }
 
-    if (!folder.parentId) {
-        return res.status(400).send("cannot delete root folder");
-    }
+    // if (!folder.parentId) {
+    //     return res.status(400).send("cannot delete root folder");
+    // }
 
     const deletedFolder = await folderDB.deleteFolder(folderid, userid);
     if (deletedFolder) {
         console.log(deletedFolder);
         return res.redirect(`/${userid}/${deletedFolder.parentId}`);
+    } else {
+        return res.status(400).send("folder does not exist");
     }
 }
 
-export { getFolderForm, postNewFolder, viewFolder, postDeleteFolder };
+async function postRenameFolder(req, res, next) {
+    // get a file id, and user id from the request
+    // if the user id matches the req.user.id rename
+}
+
+export {
+    getFolderForm,
+    postNewFolder,
+    viewFolder,
+    postDeleteFolder,
+    postRenameFolder,
+};
