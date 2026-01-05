@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <%- include('partials/head') %>
+        <%- include('../partials/head') %>
     </head>
     <body>
-        <%- include('partials/header') %>
+        <%- include('../partials/header') %>
         <main>
             <% if (locals.currentUser) { %> <%-
-            include('partials/loggedinHomepage.ejs') %> <% } else { %> <%-
-            include('partials/loggedOutHomepage.ejs') %> <% } %>
+            include('../partials/loggedinHomepage.ejs') %> <% } else { %> <%-
+            include('../partials/loggedOutHomepage.ejs') %> <% } %>
         </main>
     </body>
 </html>
