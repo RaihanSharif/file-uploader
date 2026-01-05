@@ -32,18 +32,17 @@ const mountMiddleware = (app) => {
             },
         })
     );
-    app.use(passport.session());
-    app.set("views", path.join(import.meta.dirname, "views/pages"));
-    app.set("view engine", "ejs");
-    app.use(express.urlencoded({ extended: false }));
-    app.use(express.static(assetsPath));
-
     app.use((req, res, next) => {
         if (req.user) {
             res.locals.currentUser = req.user;
         }
         next();
     });
+    app.use(passport.session());
+    app.set("views", path.join(import.meta.dirname, "views/pages"));
+    app.set("view engine", "ejs");
+    app.use(express.urlencoded({ extended: false }));
+    app.use(express.static(assetsPath));
 
     app.use(userRouter);
     app.use(indexRouter);
