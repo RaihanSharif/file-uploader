@@ -6,7 +6,14 @@ const supabase = createClient(
     process.env.SUPABASE_API
 );
 
-async function getFileById(fileId) {}
+async function getFileById(fileId, userId) {
+    return await prisma.file.findUnique({
+        where: {
+            id: fileId,
+            userId: userId,
+        },
+    });
+}
 
 async function getFileListById(folderId, userId) {
     // get all the files given a parent folder and a user id
@@ -104,4 +111,23 @@ async function updateFilename(fileId, userId, newName) {
     return updatedFile;
 }
 
-export { insertFile, deleteFile, updateFilename, getFileListById };
+async function downloadFile(filePath) {
+    const { data, error } = await supabase.storage
+        .from("TOPFileUploader")
+        .download(filePath);
+
+    if (error) {
+        throw new Error("Could not download file from supabase");
+    }
+
+    return data;
+}
+
+export {
+    insertFile,
+    deleteFile,
+    updateFilename,
+    getFileListById,
+    downloadFile,
+    getFileById,
+};

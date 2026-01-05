@@ -99,4 +99,31 @@ async function postRenameFile(req, res, next) {
         res.send("could not rename file");
     }
 }
-export { getFileUploadForm, postFileUpload, postDeleteFile, postRenameFile };
+
+async function postDownloadFile(req, res, next) {
+    const { id } = req.user;
+    const { fileid } = req.params;
+
+    const file = await fileDB.getFileById(+fileid, id);
+    console.log(file);
+    const { path } = file;
+    const { name } = file;
+
+    console.log(path);
+    const blob = await fileDB.downloadFile(path);
+
+    const buffer = Buffer.from(await blob.arrayBuffer());
+
+    res.setHeader("Content-Disposition", `attachment; filename=${name}`);
+    res.setHeader("Content-Type", blob.type || "application/octet-stream");
+
+    res.send(buffer);
+}
+
+export {
+    getFileUploadForm,
+    postFileUpload,
+    postDeleteFile,
+    postRenameFile,
+    postDownloadFile,
+};

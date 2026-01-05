@@ -8,4 +8,6 @@ fileRouter.post("/add-file/:folderid", fileController.postFileUpload);
 fileRouter.post("/delete-file/:fileid", fileController.postDeleteFile);
 fileRouter.post("/update-file/:fileid", fileController.postRenameFile);
 
+fileRouter.get("/download/:fileid", fileController.postDownloadFile);
+
 export { fileRouter };

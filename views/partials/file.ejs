@@ -4,9 +4,9 @@
         <p><%= file.name %></p>
     </div>
     <div class="item-buttons">
-        <a href="<%= file.downloadLink %>"
-            ><input type="image" src="../icons/download-icon.svg"
-        /></a>
+        <a href="/download/<%= file.id %>" download>
+            <input type="image" src="../icons/download-icon.svg" />
+        </a>
         <dialog class="edit-item-modal">
             <button class="exit-dialog">X</button>
             <p>Rename <span class="required-field">*</span></p>
